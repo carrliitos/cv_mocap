@@ -1,17 +1,31 @@
 import cv2 as cv
-from async_frame_reader import video_async
+import datetime
+import json
+from async_frame_reader.video_async import MultiCameraCapture
 
 def main():
-  cap = cv.VideoCapture(4)
-  assert cap.isOpened()
-  print(f"Captured object: {cap}")
+  with open("./cameras.json") as json_file:
+    cameras = json.load(json_file)
+  captured = MultiCameraCapture(sources=cameras)
 
   while True:
-    frame = video_async.read_frame(cap)
-    cv.imshow("Logi 720p Camera", frame)
+    for camera_name, cap in captured.captures.items():
+      frame = captured.read_frame(cap)
+      if frame is None:
+        continue
+    
+      font = cv.FONT_HERSHEY_SCRIPT_COMPLEX
+      dt = str(datetime.datetime.now())
+      frame = cv.putText(frame, dt, 
+                         (10, 100), 
+                         font, 1, 
+                         (210, 155, 155), 
+                         4, cv.LINE_8)
 
-    if cv.waitKey(1) == ord("q"):
-      break
+      cv.imshow(camera_name, frame)
+
+      if cv.waitKey(1) == ord("q"):
+        break
 
 if __name__ == '__main__':
   main()
