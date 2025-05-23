@@ -1,0 +1,17 @@
+# 1. Build docker-compose
+
+```
+$ docker compose -f concurrent_camera_reader/docker-compose.yaml build
+```
+
+# 2. Start docker
+
+```
+$ docker compose -f concurrent_camera_reader/docker-compose.yaml up
+```
+
+# 3. Open new terminal and login to the container
+
+```
+$ docker exec -it concurrent_camera_reader-asyncreader-1 /bin/bash
+```
