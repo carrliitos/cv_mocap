@@ -45,8 +45,10 @@ def main():
     # Draw the target point if one has been set
     if target_point is not None:
       cv2.circle(frame_out, target_point, 10, (0, 255, 0), -1)
-      cv2.putText(frame_out, "Target", (target_point[0] + 10, target_point[1] - 10),
-            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+      cv2.putText(
+        frame_out, "Target", (target_point[0] + 10, target_point[1] - 10),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1
+      )
 
     cv2.imshow(window_name, frame_out)
     # cv2.imshow("Webcam with Contours", img)
